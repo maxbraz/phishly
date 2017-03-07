@@ -1,82 +1,50 @@
-var app = angular.module('Phishly', ['ngSanitize', 'ui.router']);
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+require('./models/Song');
 
-app.config([
-  '$stateProvider',
-  '$urlRouterProvider',
-  function($stateProvider, $urlRouterProvider) {
-    $stateProvider
-      .state('home', {
-        url: '/home',
-        templateUrl: '/home.html',
-        controller: 'MainCtrl'
-      });
+mongoose.connect('mongodb://localhost/news');
 
-    $urlRouterProvider.otherwise('home');
-  }
-])
+var index = require('./routes/index');
+var users = require('./routes/users');
 
-app.service('ZenService', [function($http) {
-  this.getZen = function() {
-    return $http({
-      method: 'GET',
-      url: 'https://api.github.com/zen'
-    });
-  };
-}]);
+var app = express();
 
-app.factory('songs', [function() {
-  var songList = {
-    songs: [
-      {name: 'Bathtub Gin', url: 'http://phish.in/1997-08-17/bathtub-gin', upvotes: 0},
-      {name: 'Tweezer', url: 'http://phish.in/2013-07-31/tweezer', upvotes: 5},
-      {name: 'Roses are Free', url: 'http://phish.in/1998-04-03/roses-are-free', upvotes: 0},
-      {name: 'ACDC Bag', url: 'http://phish.in/1999-09-14/ac-dc-bag', upvotes: 2},
-      {name: 'Harry Hood', url: 'http://phish.in/1993-12-31/harry-hood', upvotes: 0},
-      {name: 'Chalkdust Torture', url: 'http://phish.in/1999-07-10/chalk-dust-torture', upvotes: 7},
-      {name: 'Prince Caspian', url: 'http://phish.in/2015-08-22/prince-caspian', upvotes: 0},
-      {name: 'Ghost', url: 'http://phish.in/2000-05-22/ghost', upvotes: 9},
-      {name: 'You Enjoy Myself', url: 'http://phish.in/1995-12-09/you-enjoy-myself', upvotes: 0}
-    ]
-  }
-  return songList
-}]);
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-app.controller('MainCtrl', [
-  '$scope', '$sce', 'songs',
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-  function($scope, $sce, songs) {
-    $scope.trustSrc = function(src) {
-      return $sce.trustAsResourceUrl(src);
-    };
+app.use('/', index);
+app.use('/users', users);
 
-    $scope.songs = songs.songs;
-    // $scope.songs = [
-    //     {name: 'Bathtub Gin', url: 'http://phish.in/1997-08-17/bathtub-gin', upvotes: 0},
-    //     {name: 'Tweezer', url: 'http://phish.in/2013-07-31/tweezer', upvotes: 5},
-    //     {name: 'Roses are Free', url: 'http://phish.in/1998-04-03/roses-are-free', upvotes: 0},
-    //     {name: 'ACDC Bag', url: 'http://phish.in/1999-09-14/ac-dc-bag', upvotes: 2},
-    //     {name: 'Harry Hood', url: 'http://phish.in/1993-12-31/harry-hood', upvotes: 0},
-    //     {name: 'Chalkdust Torture', url: 'http://phish.in/1999-07-10/chalk-dust-torture', upvotes: 7},
-    //     {name: 'Prince Caspian', url: 'http://phish.in/2015-08-22/prince-caspian', upvotes: 0},
-    //     {name: 'Ghost', url: 'http://phish.in/2000-05-22/ghost', upvotes: 9},
-    //     {name: 'You Enjoy Myself', url: 'http://phish.in/1995-12-09/you-enjoy-myself', upvotes: 0}
-    // ];
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
-    $scope.incrementUpvotes = function(song) {
-      song.upvotes += 1;
-    };
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    $scope.iframeUrl = '';
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
 
-    $scope.iframeLoad = function(song) {
-      $scope.iframeUrl = song.url;
-    };
-
-    $scope.addSong = function() {
-      if (!$scope.name || $scope.name === '') {return;}
-      $scope.songs.push({name: '$scope.name', url: '$scope.link', upvotes: 0})
-      $scope.name = '';
-      $scope.link = '';
-    };
-  }
-]);
+module.exports = app;
