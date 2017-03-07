@@ -1,4 +1,19 @@
-var app = angular.module('Phishly', ['ngSanitize']);
+var app = angular.module('Phishly', ['ngSanitize', 'ui.router']);
+
+app.config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state('home', {
+        url: '/home',
+        templateUrl: '/home.html',
+        controller: 'MainCtrl'
+      });
+
+    $urlRouterProvider.otherwise('home');
+  }
+])
 
 app.service('ZenService', [function($http) {
   this.getZen = function() {
