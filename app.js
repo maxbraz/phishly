@@ -28,7 +28,10 @@ app.controller('MainCtrl', [
 
     $scope.iframeLoad = function(song) {
       $scope.iframeUrl = song.url;
-      // console.log($scope.iframeUrl);
+    };
+
+    $scope.addSong = function() {
+      $scope.songs.push({name: 'You Enjoy Myself', url: 'http://phish.in/1995-12-09/you-enjoy-myself', upvotes: 0})
     };
   }
 ]);
