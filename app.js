@@ -2,8 +2,8 @@ var app = angular.module('phishly', ['ngSanitize']);
 
 app.controller('MainCtrl', [
   '$scope', '$sce',
+
   function($scope, $sce) {
-    console.log('this is sce', $sce);
     $scope.trustSrc = function(src) {
       return $sce.trustAsResourceUrl(src);
     };

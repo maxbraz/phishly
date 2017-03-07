@@ -17,7 +17,11 @@
 
         <div class="page-header">
           <h1>Phishly</h1>
-          <iframe width="01" height="01" ng-src={{trustSrc(iframeUrl)}}></iframe>
+            <div style="width: -400px; height: -200px; overflow: hidden; position: relative;">
+              <div style="position: absolute; top: 100px; left: 100px; width: -1280px; height: -1200px;">
+                <iframe width="200" height="75" ng-src={{trustSrc(iframeUrl)}}></iframe>
+              </div>
+            </div>
         </div>
 
         <div ng-repeat="song in songs | orderBy: '-upvotes'">
