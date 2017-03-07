@@ -10,7 +10,7 @@
     <script src="app.js"></script>
     <style> .glyphicon-hand-up { cursor:pointer } </style>
   </head>
-  <body ng-app="Phishly" ng-controller="MainCtrl">
+  <body ng-app="Phishly" ng-controller="MainCtrl" onload="iframeLoad(http://phish.in/2016-07-19/fluffhead)">
 
     <div class="row">
       <div class="col-md-6 col-md-offset-1">
@@ -19,7 +19,7 @@
           <!-- <h1>Phishly</h1> -->
             <!-- <div style="width: 400px; height: 200px; overflow: hidden; position: relative;"> -->
               <!-- <div style="position: absolute; top: 100px; left: 100px; width: 1280px; height: 1200px;"> -->
-                <iframe width="950" height="110" ng-src={{trustSrc(iframeUrl)}}></iframe>
+                <iframe width="950" height="110" src=http://phish.in/2016-07-19/fluffhead" ng-src={{trustSrc(iframeUrl)}}></iframe>
               <!-- </div> -->
             <!-- </div> -->
         </div>
