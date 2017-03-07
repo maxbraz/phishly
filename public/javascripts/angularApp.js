@@ -9,25 +9,25 @@ app.config([
         url: '/home',
         templateUrl: '/home.html',
         controller: 'MainCtrl'
-      })
-      .state('posts', {
-        url: '/posts/{id}',
-        templateUrl: '/posts.html',
-        controller: 'PostsCtrl'
       });
+      // .state('songs', {
+      //   url: '/songs/',
+      //   templateUrl: '/songs.html',
+      //   controller: 'SongsCtrl'
+      // });
 
     $urlRouterProvider.otherwise('home');
   }
 ])
 
-app.service('ZenService', [function($http) {
-  this.getZen = function() {
-    return $http({
-      method: 'GET',
-      url: 'https://api.github.com/zen'
-    });
-  };
-}]);
+// app.service('ZenService', [function($http) {
+//   this.getZen = function() {
+//     return $http({
+//       method: 'GET',
+//       url: 'https://api.github.com/zen'
+//     });
+//   };
+// }]);
 
 app.factory('songs', [function() {
   var songList = {

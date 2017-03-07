@@ -28,7 +28,7 @@
 
         <div ng-repeat="song in songs | orderBy: '-upvotes'">
             <span style="font-size:20px; margin-left:10px;">
-              <a ng-click="iframeLoad(song)" href target="_blank">
+              <a ng-click="iframeLoad(song)"> <!-- href target="_blank" -->
                 {{song.name}}
               </a>
             <span class="glyphicon glyphicon-hand-up"
@@ -37,7 +37,7 @@
             </span>
         </div>
 
-        <form ng-submit="addPost()"
+        <!-- <form ng-submit="addSong()"
           style="margin-top:30px;">
           <h3>Add a new song</h3>
 
@@ -61,16 +61,16 @@
           </div>
           <br />
           <button ng-submit="addSong()" type="submit" class="btn btn-primary">Post</button>
-        </form>
+        </form> -->
 
       </div>
     </div>
-    <script type="text/ng-template" id="/home.html">
+    <!-- <script type="text/ng-template" id="/home.html">
       <div class="page-header">
         <h1>Phishly</h1>
-      </div>
+      </div> -->
 
       <!-- rest of template ??? do I copy and past in the above stuff? -->
-    </script>
+    <!-- </script> -->
   </body>
 </html>
