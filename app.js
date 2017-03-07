@@ -28,7 +28,7 @@ app.controller('MainCtrl', [
 
     $scope.iframeLoad = function(song) {
       $scope.iframeUrl = song.url;
-      console.log($scope.iframeUrl);
+      // console.log($scope.iframeUrl);
     };
   }
 ]);
