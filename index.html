@@ -10,10 +10,10 @@
     <script src="app.js"></script>
     <style> .glyphicon-hand-up { cursor:pointer } </style>
   </head>
-  <body ng-app="phishly" ng-controller="MainCtrl">
+  <body ng-app="Phishly" ng-controller="MainCtrl">
 
     <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-6 col-md-offset-1">
 
         <div class="page-header">
           <!-- <h1>Phishly</h1> -->
@@ -58,7 +58,7 @@
               ng-model="year"</input>
           </div>
           <br />
-          <button ng-click"addSong()" type="submit" class="btn btn-primary">Post</button>
+          <button ng-submit="addSong()" type="submit" class="btn btn-primary">Post</button>
         </form>
 
       </div>
