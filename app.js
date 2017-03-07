@@ -1,8 +1,13 @@
-var app = angular.module('phishly', []);
+var app = angular.module('phishly', ['ngSanitize']);
 
 app.controller('MainCtrl', [
-  '$scope',
-  function($scope) {
+  '$scope', '$sce',
+  function($scope, $sce) {
+    console.log('this is sce', $sce);
+    $scope.trustSrc = function(src) {
+      return $sce.trustAsResourceUrl(src);
+    };
+
     $scope.songs = [
         {name: 'Bathtub Gin', url: 'http://phish.in/1997-08-17/bathtub-gin', upvotes: 0},
         {name: 'Tweezer', url: 'http://phish.in/2013-07-31/tweezer', upvotes: 5},
@@ -14,8 +19,16 @@ app.controller('MainCtrl', [
         {name: 'Ghost', url: 'http://phish.in/2000-05-22/ghost', upvotes: 9},
         {name: 'You Enjoy Myself', url: 'http://phish.in/1995-12-09/you-enjoy-myself', upvotes: 0}
     ];
+
     $scope.incrementUpvotes = function(song) {
       song.upvotes += 1;
-    }
+    };
+
+    $scope.iframeUrl = '';
+
+    $scope.iframeLoad = function(song) {
+      $scope.iframeUrl = song.url;
+      console.log($scope.iframeUrl);
+    };
   }
 ]);

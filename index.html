@@ -4,37 +4,36 @@
     <title>Phishly</title>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.10.3/TweenMax.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="app.js"></script>
-    <style> .glyphicon-thumbs-up { cursor:pointer } </style>
+    <style> .glyphicon-hand-up { cursor:pointer } </style>
   </head>
   <body ng-app="phishly" ng-controller="MainCtrl">
+
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
 
         <div class="page-header">
           <h1>Phishly</h1>
+          <iframe width="01" height="01" ng-src={{trustSrc(iframeUrl)}}></iframe>
         </div>
 
         <div ng-repeat="song in songs | orderBy: '-upvotes'">
-            <span class="glyphicon glyphicon-thumbs-up"
-              ng-click="incrementUpvotes(song)"></span>
-              {{song.upvotes}}
             <span style="font-size:20px; margin-left:10px;">
-              <a ng-show="song.url" href="{{song.url}}">
-                {{name}}
+              <a ng-click="iframeLoad(song)" href target="_blank">
+                {{song.name}}
               </a>
-            <!-- <span style="font-size:20px; margin-left:10px;"></span>
-              {{song.upvotes}} -->
-            <!-- <span ng-hide="song.url">
-              {{song.url}}
-            </span> -->
-              <!-- - upvotes: {{post.upvotes}} -->
+            <span class="glyphicon glyphicon-hand-up"
+            ng-click="incrementUpvotes(song)"></span>
+            {{song.upvotes}}
             </span>
         </div>
 
-        <!-- <form ng-submit="addPost()"
+        <form ng-submit="addPost()"
           style="margin-top:30px;">
-          <h3>Add a new post</h3>
+          <h3>Add a new song</h3>
 
           <div class="form-group">
             <input type="text"
@@ -48,8 +47,15 @@
               placeholder="Link"
               ng-model="link"</input>
           </div>
+          <div class="form-group">
+            <input type="text"
+              class="form-control"
+              placeholder="Year"
+              ng-model="year"</input>
+          </div>
+          <br />
           <button type="submit" class="btn btn-primary">Post</button>
-        </form> -->
+        </form>
 
       </div>
     </div>
