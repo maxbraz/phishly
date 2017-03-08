@@ -11,6 +11,12 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 
 //configuration ==============================
 mongoose.connect('mongodb://localhost/songs');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  //something here
+});
+
 app.use(express.static(path.join(__dirname, 'client')));         // set the static files location /client/
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
@@ -25,31 +31,23 @@ app.use(methodOverride());
 // app.listen(port);
 // console.log("phishly is listening on port: " + port);
 
-var Song = mongoose.model('Song', {
-  name: String,
-  url: String,
-  upvotes: { type: String, default: 0 }
-});
-app.listen(3000, function() {
-  console.log('phishly is listening on port 3000')
-});
-
-var db = mongoose.connection;
-
 var songSchema = mongoose.Schema({
   name: String,
   url: String,
   upvotes: { type: String, default: 0 }
 });
 
-var brother = new Song({
-  name: 'Brother',
-  url: 'http://phish.in/1998-04-04/brother'
+var Song = mongoose.model('Song', songSchema);
+
+app.listen(3000, function() {
+  console.log('phishly is listening on port 3000')
 });
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-});
+// var brother = new Song({
+//   name: 'Brother',
+//   url: 'http://phish.in/1998-04-04/brother'
+// });
+
 
 
 // app.get('/', function(req, res) {
