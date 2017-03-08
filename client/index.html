@@ -7,23 +7,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.10.3/TweenMax.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-    <script src="app.js"></script>
+    <script src="angularApp.js"></script>
     <style> .glyphicon-hand-up { cursor:pointer } </style>
   </head>
-  <body ng-app="Phishly" ng-controller="MainCtrl" onload="iframeLoad(http://phish.in/2016-07-19/fluffhead)">
-
+  <body ng-app="Phishly" ng-controller="MainCtrl">
     <div class="row">
       <div class="col-md-6 col-md-offset-1">
-
         <div class="page-header">
-          <!-- <h1>Phishly</h1> -->
-            <!-- <div style="width: 400px; height: 200px; overflow: hidden; position: relative;"> -->
-              <!-- <div style="position: absolute; top: 100px; left: 100px; width: 1280px; height: 1200px;"> -->
-                <iframe width="950" height="110" src=http://phish.in/2016-07-19/fluffhead" ng-src={{trustSrc(iframeUrl)}}></iframe>
-              <!-- </div> -->
-            <!-- </div> -->
+          <iframe width="950" height="110" src="http://phish.in/" ng-src={{trustSrc(iframeUrl)}}></iframe>
         </div>
-
         <div ng-repeat="song in songs | orderBy: '-upvotes'">
             <span style="font-size:20px; margin-left:10px;">
               <a ng-click="iframeLoad(song)" href target="_blank">
@@ -35,7 +27,7 @@
             </span>
         </div>
 
-        <form ng-submit="addPost()"
+        <form ng-submit="addSong()"
           style="margin-top:30px;">
           <h3>Add a new song</h3>
 
