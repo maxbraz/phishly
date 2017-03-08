@@ -18,9 +18,9 @@ app.factory('songs', [function() {
 }]);
 
 app.controller('MainCtrl', [
-  '$scope', '$sce', 'songs',
+  '$scope', '$sce', 'songs', '$http',
 
-  function($scope, $sce, songs) {
+  function($scope, $sce, songs, $http) {
     $scope.trustSrc = function(src) {
       return $sce.trustAsResourceUrl(src);
     };
