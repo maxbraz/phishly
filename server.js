@@ -14,7 +14,7 @@ mongoose.connect('mongodb://localhost/songs');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  //something here
+  console.log();
 });
 
 app.use(express.static(path.join(__dirname, 'client')));         // set the static files location /client/
@@ -39,31 +39,47 @@ var songSchema = mongoose.Schema({
 
 var Song = mongoose.model('Song', songSchema);
 
-app.listen(3000, function() {
-  console.log('phishly is listening on port 3000')
-});
 
 // var brother = new Song({
 //   name: 'Brother',
 //   url: 'http://phish.in/1998-04-04/brother'
 // });
+app.get('/', function (req, res) {
+  song.find(function(err, songs) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(songs);
+    }
+    res.end();
+  });
+});
 
+app.post('/', function (req, res) {
+  var obj = {name: 'Bathtub Gin', url: 'http://phish.in/1997-08-17/bathtub-gin'};
+  song.create(obj, function(err, song) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('got a response')
+      res.end();
+    }
+  })
+});
 
+app.delete('/', function (req, res) {
+  var obj = {name: 'Bathtub Gin', url: 'http://phish.in/1997-08-17/bathtub-gin'};
+  song.find(obj, function(err, song) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('delete that mofo');
+      song.remove()
+      res.send('Delete request to homepage');
+    }
+  })
+});
 
-// app.get('/', function(req, res) {
-//   // res.render('/index.html')
-//   res.sendFile('index.html', {root : __dirname + '/'});
-// });
-//
-// app.post('/', function(req, res) {
-//   //insert into database
-//   res.send('Got a Post request');
-// });
-//
-// app.put('/user', function(req, res) {
-//   res.send('Got a PUT request at /user');
-// });
-//
-// app.delete('/user', function(req, res) {
-//   res.send('Got a DELETE request at /user');
-// });
+app.listen(3000, function() {
+  console.log('phishly is listening on port 3000')
+});
