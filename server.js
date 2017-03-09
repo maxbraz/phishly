@@ -69,7 +69,7 @@ app.post('/', function (req, res) {
 
 app.delete('/', function (req, res) {
   var obj = {name: 'Bathtub Gin', url: 'http://phish.in/1997-08-17/bathtub-gin'};
-  song.find(obj, function(err, song) {
+  song.findOne(obj, function(err, song) {
     if (err) {
       console.log(err);
     } else {
