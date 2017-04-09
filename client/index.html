@@ -12,13 +12,15 @@
     <script src="angularApp.js"></script>
     <style> .glyphicon-hand-up { cursor:pointer } </style>
   </head>
-  <body ng-app="Phishly" ng-controller="MainCtrl">
+  <body ng-app="app" ng-controller="MainCtrl" ng-init="init()">
+    <h1>Phishly</h1>
     <div class="row">
       <div class="col-md-6 col-md-offset-1">
         <div class="page-header">
           <iframe width="950" height="110" src="http://phish.in/" ng-src={{trustSrc(iframeUrl)}}></iframe>
         </div>
-        <div ng-repeat="song in songs | orderBy: '-upvotes'">
+        <div>{{songList}}</div>
+        <div ng-repeat="song in songList | orderBy: '-upvotes'">
             <span style="font-size:20px; margin-left:10px;">
               <a ng-click="iframeLoad(song)" href target="_blank">
                 {{song.name}}
@@ -29,32 +31,25 @@
             </span>
         </div>
 
-        <form ng-submit="addSong()"
+        <form ng-submit="postSong()"
           style="margin-top:30px;">
           <h3>Add a new song</h3>
 
           <div class="form-group">
             <input type="text"
               class="form-control"
-              placeholder="Title"
-              ng-model="title"</input>
+              placeholder="Song Name"
+              ng-model="name"</input>
           </div>
           <div class="form-group">
             <input type="text"
               class="form-control"
-              placeholder="Link"
-              ng-model="link"</input>
-          </div>
-          <div class="form-group">
-            <input type="text"
-              class="form-control"
-              placeholder="Year"
-              ng-model="year"</input>
+              placeholder="Url"
+              ng-model="url"</input>
           </div>
           <br />
-          <button ng-submit="addSong()" type="submit" class="btn btn-primary">Post</button>
+          <button ng-submit="postSong(name, url)" type="submit" class="btn btn-primary">Post</button>
         </form>
-
       </div>
     </div>
   </body>
