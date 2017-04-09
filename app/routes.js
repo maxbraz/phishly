@@ -20,8 +20,8 @@
 //
 //       // create a song, information comes from AJAX request from Angular
 //       Song.create({
-//           name : req.body.title,
-//           url : req.body.link
+//           name : req.body.name,
+//           url : req.body.url
 //       }, function(err, song) {
 //           if (err)
 //               res.send(err);
